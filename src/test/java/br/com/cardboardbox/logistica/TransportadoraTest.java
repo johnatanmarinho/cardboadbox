@@ -14,7 +14,6 @@ import br.com.cardboardbox.logistica.filtros.FiltroPreco;
 import br.com.cardboardbox.logistica.filtros.FiltroTempo;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TransportadoraTest {
 	
@@ -103,6 +102,18 @@ public class TransportadoraTest {
 		assertArrayEquals(menorTempoTerrestreExpected, menorTempo.toArray());
 		
 		
+		
+		Transportadora t5 = new Transportadora("transportadora 5");
+		t5.addTransport( Frete.AEREO , 175.0, 30);
+		tLista.add(t5);
+		
+		menorPreco = filtro.filtrar(tLista, rota1.getDistancia(), Frete.AEREO);
+		
+		Transportadora[] menorPrecoEmpate = {
+				t4,
+				t5
+		};
+		assertArrayEquals(menorPrecoEmpate, menorPreco.toArray());
 	}
 
 }

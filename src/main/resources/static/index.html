@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>CardBoardBox Company</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+</head>
+<body>
+    <main>
+        <div class="form-container">
+            <form action="" id="search-form">
+                <div class="input-box">
+                	<label for="distancia">Distancia*</label>
+                    <input required type="text" placeholder="distancia" id="distancia" name="distancia">
+                </div>
+
+                <div class="input-box">
+                	<label for="tipo-transport">Tipo do Frete</label>
+                    <select name="tipo-transporte" id="tipo-transport">
+                        <option value=""></option>
+                        <option value="1">Aereo</option>
+                        <option value="2">Terrestre</option>
+                    </select>
+                </div>
+
+                <div class="input-box">
+                	<label for="prioridade">Prioridade*</label>
+                    <select required name="prioridade" id="prioridade">
+                        <option value="melhorPreco">Preço</option>
+                        <option value="melhorTempo">Tempo</option>
+                    </select>
+                </div>
+                <input type="submit" value="pesquisar">
+            </form>
+        </div>
+        <table id="trans-container">
+			
+        </table>
+    </main>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

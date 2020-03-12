@@ -1,7 +1,6 @@
 package br.com.cardboardbox.logistica.controllers;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +39,15 @@ public class ServicesController {
 	@GetMapping("/transportadora/4")
 	public Transportadora getTransportadora4(){
 		Transportadora t2 = new Transportadora("transportadora 4", new ArrayList<Frete>());
+		
+		t2.addTransport(Frete.AEREO, 175.0, 30);
+		
+		return t2;
+	}
+	
+	@GetMapping("/transportadora/5")
+	public Transportadora getTransportadora5(){
+		Transportadora t2 = new Transportadora("transportadora 5", new ArrayList<Frete>());
 		
 		t2.addTransport(Frete.AEREO, 175.0, 30);
 		

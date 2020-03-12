@@ -14,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 
 import br.com.cardboardbox.logistica.beans.Transportadora;
 import br.com.cardboardbox.logistica.dao.TransRepository;
-import br.com.cardboardbox.logistica.filtros.Filtro;
 import br.com.cardboardbox.logistica.filtros.FiltroPreco;
 import br.com.cardboardbox.logistica.filtros.FiltroTempo;
 
@@ -31,7 +30,8 @@ public class TransportadoraController {
 	String[] services = {
 			"http://localhost:8080/service/transportadora/2",
 			"http://localhost:8080/service/transportadora/3",
-			"http://localhost:8080/service/transportadora/4"
+			"http://localhost:8080/service/transportadora/4",
+			"http://localhost:8080/service/transportadora/5"
 	};
 	
 	@Bean

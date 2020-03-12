@@ -1,11 +1,13 @@
 package br.com.cardboardbox.logistica.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown= true)
 public class Rota {
 
 	private String origem;
 	private String destino;
 	private double distancia;
-	private double tempoEstimado;
 	
 	
 	public Rota(String string, String string2) {

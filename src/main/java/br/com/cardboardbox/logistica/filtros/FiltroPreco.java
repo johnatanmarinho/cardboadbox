@@ -10,7 +10,7 @@ import br.com.cardboardbox.logistica.beans.Transportadora;
 public class FiltroPreco extends Filtro{
 	
 	
-	public List<Transportadora> filtrar(List<Transportadora> transportadoras, int distancia, int tipoFrete) {
+	public List<Transportadora> filtrar(List<Transportadora> transportadoras, double distancia, int tipoFrete) {
 		List<Transportadora> result = filtraPeloTipo(transportadoras, tipoFrete);
 		
 		if(result == null)
@@ -33,7 +33,7 @@ public class FiltroPreco extends Filtro{
 	}
 
 	@Override
-	public List<Transportadora> filtrar(List<Transportadora> transportadoras, int distancia) {
+	public List<Transportadora> filtrar(List<Transportadora> transportadoras, double distancia) {
 List<Transportadora> result;
 		
 		double menorPreco = transportadoras.stream()

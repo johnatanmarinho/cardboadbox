@@ -52,13 +52,13 @@ public class Frete {
 	}
 
 	@Transient
-	public double getPrecoFinal(int distancia) {
+	public double getPrecoFinal(double distancia) {
 		return ( valorKm * distancia ) /10;
 	}
 	
 	@Transient
-	public int getTempoEntrega( int distancia ) {
-		return (distancia / tempoKm);
+	public double getTempoEntrega( double distancia ) {
+		return (distancia * tempoKm)/ 60;
 	}
 
 }

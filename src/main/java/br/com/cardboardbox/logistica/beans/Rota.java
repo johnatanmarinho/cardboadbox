@@ -5,7 +5,12 @@ public class Rota {
 	private String origem;
 	private String destino;
 	private double distancia;
+	private double tempoEstimado;
 	
+	
+	public Rota(String string, String string2) {
+		// TODO Auto-generated constructor stub
+	}
 	public String getOrigem() {
 		return origem;
 	}

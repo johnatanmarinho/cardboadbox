@@ -14,12 +14,15 @@ public class Transportadora {
 	List<Frete> fretes;
 
 	
-	
-	
 	public Transportadora(String nome, List<Frete> fretes) {
 		super();
 		this.nome = nome;
 		this.fretes = fretes;
+	}
+	
+	public Transportadora(String nome) {
+		this.nome = nome;
+		this.fretes = new ArrayList<Frete>();
 	}
 
 
@@ -53,7 +56,7 @@ public class Transportadora {
 	
 	@Override
 	public String toString() {
-		String text = this.getNome() + "\n";
+		String text = "";
 		
 		for (Frete frete : this.fretes) {
 			text += "tipo frete: " + frete.getTipo() + 

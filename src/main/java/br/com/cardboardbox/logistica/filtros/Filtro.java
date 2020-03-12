@@ -28,9 +28,9 @@ public abstract class Filtro {
 				.collect(Collectors.toList());
 	}
 	
-	public abstract List<Transportadora> filtrar(List<Transportadora> transportadoras, int distancia, int tipoFrete);
+	public abstract List<Transportadora> filtrar(List<Transportadora> transportadoras, double distancia, int tipoFrete);
 
-	public abstract List<Transportadora> filtrar(List<Transportadora> transportadoras, int distancia);
+	public abstract List<Transportadora> filtrar(List<Transportadora> transportadoras, double distancia);
 	
 	
 }

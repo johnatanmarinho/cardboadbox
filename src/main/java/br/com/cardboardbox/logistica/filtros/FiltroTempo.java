@@ -10,15 +10,15 @@ import br.com.cardboardbox.logistica.beans.Transportadora;
 public class FiltroTempo extends Filtro{
 
 	@Override
-	public List<Transportadora> filtrar(List<Transportadora> transportadoras, int distancia, int tipoFrete) {
+	public List<Transportadora> filtrar(List<Transportadora> transportadoras, double distancia, int tipoFrete) {
 		List<Transportadora> result = filtraPeloTipo(transportadoras, tipoFrete);
 
 		if(result == null)
 			return new ArrayList<Transportadora>();
 		
-		int menorTempo = result.stream()
-				.mapToInt( t -> t.getTransportByType(tipoFrete).getTempoEntrega(distancia))
-				.min().getAsInt();
+		double menorTempo = result.stream()
+				.mapToDouble( t -> t.getTransportByType(tipoFrete).getTempoEntrega(distancia))
+				.min().getAsDouble();
 				
 		result = result.stream()
 				.filter( t -> t.getTransportByType(tipoFrete).getTempoEntrega(distancia) == menorTempo)
@@ -30,22 +30,22 @@ public class FiltroTempo extends Filtro{
 		return result;
 	}
 
-	public List<Transportadora> filtrar(List<Transportadora> transportadoras,  int distancia) {
+	public List<Transportadora> filtrar(List<Transportadora> transportadoras,  double distancia) {
 		List<Transportadora> result;
 		
-		int menorTempo = transportadoras.stream()
-				.mapToInt( t -> {
+		double menorTempo = transportadoras.stream()
+				.mapToDouble( t -> {
 					return t.getFretes().stream()
-							.mapToInt(f -> f.getTempoEntrega(distancia))
-							.min().getAsInt();
+							.mapToDouble(f -> f.getTempoEntrega(distancia))
+							.min().getAsDouble();
 				})
-				.min().getAsInt();
+				.min().getAsDouble();
 		
 		result = transportadoras.stream()
 				.filter( t -> {
 					return t.getFretes().stream()
-							.mapToInt(f -> f.getTempoEntrega(distancia))
-							.min().getAsInt() == menorTempo;
+							.mapToDouble(f -> f.getTempoEntrega(distancia))
+							.min().getAsDouble() == menorTempo;
 				})
 				.collect(Collectors.toList());
 		

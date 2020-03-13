@@ -17,11 +17,11 @@ public class FiltroTempo extends Filtro{
 			return new ArrayList<Transportadora>();
 		
 		double menorTempo = result.stream()
-				.mapToDouble( t -> t.getTransportByType(tipoFrete).getTempoEntrega(distancia))
+				.mapToDouble( t -> t.getFreteByTipo(tipoFrete).getTempoEntrega(distancia))
 				.min().getAsDouble();
 				
 		result = result.stream()
-				.filter( t -> t.getTransportByType(tipoFrete).getTempoEntrega(distancia) == menorTempo)
+				.filter( t -> t.getFreteByTipo(tipoFrete).getTempoEntrega(distancia) == menorTempo)
 				.collect(Collectors.toList());
 		
 		if(hasNext()) {

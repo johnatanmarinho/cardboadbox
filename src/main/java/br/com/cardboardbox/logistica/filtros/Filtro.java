@@ -24,7 +24,7 @@ public abstract class Filtro {
 	
 	public List<Transportadora> filtraPeloTipo(List<Transportadora> transportadoras, int tipoFrete) {
 		return transportadoras.stream()
-				.filter(t -> t.getTransportByType(tipoFrete) != null)
+				.filter(t -> t.getFreteByTipo(tipoFrete) != null)
 				.collect(Collectors.toList());
 	}
 	

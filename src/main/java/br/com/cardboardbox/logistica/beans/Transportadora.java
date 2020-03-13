@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Transportadora {
 	
 	private String nome;
-	List<Frete> fretes;
+	private List<Frete> fretes;
 
 	
 	public Transportadora(String nome, List<Frete> fretes) {
@@ -42,7 +42,7 @@ public class Transportadora {
 		this.nome = nome;
 	}
 	
-	public Frete getTransportByType(int tipo) {
+	public Frete getFreteByTipo(int tipo) {
 		Frete result = fretes.stream()
 				.filter(frete -> frete.getTipo() == tipo)
 				.findAny()
@@ -59,7 +59,7 @@ public class Transportadora {
 		String text = "";
 		
 		for (Frete frete : this.fretes) {
-			text += "tipo frete: " + frete.getTipo() + 
+			text += "tipo do frete: " + frete.getTipo() + 
 					" valor por km: " + frete.getValorKm() +
 					" tempo medio: " + frete.getTempoKm() + "\n";
 		}

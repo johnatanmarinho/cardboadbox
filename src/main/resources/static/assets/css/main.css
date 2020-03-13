@@ -3,69 +3,94 @@
 	margin: 0;
 	box-sizing: border-box;
 }
-body{
+main{
 	background: #f1f1f1f1;
-	display: flex;
+	display: grid;
+	grid-template-columns: 300px	  1fr; 
 	height: 100vh;
 	justify-content: center;
 	align-items: center;
-	color: #444;
 }
 
-.form-container{
-	background: white;
+main .form-container{
+	background: #444;
 	padding: 32px;
-	border-radius: 10px;
 	box-shadow: 1px 1px 10px rgba(0,0,0, 0.15);
-	width: 100%;
+	grid-column: 1;
+	grid-row: 1 /-1;
+	height: 100%;
+	color: lightgray;
 }
 
-.form-container #search-form input{
-	border: 1px solid lightgray;
-	padding:8px;
-}
 
 
-
-.form-container #search-form input[type=submit]{
+main .form-container #search-form input[type=submit]{
 	width: 100%;
 	border:none;
+	padding: 8px;
 	background: #01579b;
 	color: white;
 	margin-top:16px;
 	transition: all 0.5s;
+	border-radius: 5px
 }
 
-.form-container #search-form input[type=submit]:hover{
+main .form-container #search-form input[type=submit]:hover{
 	background: #bf360c;
 	box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
 
-.form-container #search-form .input-box{
+main .form-container #search-form .input-box{
 	margin-top: 8px;
 	font-size: .8em;
-	color: #444;
+	color: lighgray;
 }
 
-.form-container #search-form .input-box input,
-.form-container #search-form .input-box select{
+main .form-container #search-form .input-box input,
+main .form-container #search-form .input-box select{
+	background: #777;
 	width: 100%;
-	border: 1px solig lightgray;
-	
+	border: none;
+	padding:8px;
+	color: lightgray;
+	border-radius: 5px;
+	-moz-appearance: none;
+	position: relative;
+	display: block;
 }
 
-#trans-container{
+main .form-container #search-form .input-box select::after {
+	 position: absolute;
+	 content: "";
+	 top: 14px;
+	 right: 10px;
+	 width: 0;
+	 height: 0;
+	 border: 6px solid transparent;
+	 border-color: #fff transparent transparent transparent;
+	 border-bottom-color: lightgray; 
+	 z-index: 2;	
+}
+
+
+main .result{
+	color: #444;
+	grid-row: 1/-1;
+	height: 100%;
+} 
+
+main .result #trans-container{
 	background: white;
-	margin-top: 32px;
+	margin: 32px;
 	padding: 32px;
 	box-shadow: 1px 1px 5px rgba(0,0,0,0.15)
 }
 
-#trans-container h2{
+main .result #trans-container h2{
 	font-size: 1.5em;
 }
 
-#trans-container .transportadora{
+main .result #trans-container .transportadora{
 	border-bottom: 1px solid lightgray;
 	padding: 8px;
 }

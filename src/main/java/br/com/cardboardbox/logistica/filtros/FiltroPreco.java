@@ -17,13 +17,13 @@ public class FiltroPreco extends Filtro{
 			return new ArrayList<Transportadora>();
 		
 		double minPreco = result.stream()
-				.mapToDouble( t -> t.getTransportByType(tipoFrete).getPrecoFinal(distancia))
+				.mapToDouble( t -> t.getFreteByTipo(tipoFrete).getPrecoFinal(distancia))
 				.min().getAsDouble();
 
 
 		//menor preco
 		result = result.stream()
-				.filter( t -> t.getTransportByType(tipoFrete).getPrecoFinal(distancia) == minPreco)
+				.filter( t -> t.getFreteByTipo(tipoFrete).getPrecoFinal(distancia) == minPreco)
 				.collect(Collectors.toList());
 		
 		if(hasNext()) {

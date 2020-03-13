@@ -13,48 +13,23 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import br.com.cardboardbox.logistica.beans.Transportadora;
+import br.com.cardboardbox.logistica.beans.Transportadoras;
 import br.com.cardboardbox.logistica.dao.TransRepository;
 import br.com.cardboardbox.logistica.filtros.FiltroPreco;
 import br.com.cardboardbox.logistica.filtros.FiltroTempo;
 
 @RestController
 @RequestMapping("transportadoras")
-public class TransportadoraController {
+public class TransportadorasController {
+
 	
 	@Autowired
-	RestTemplate restTemplate;
+	Transportadoras restRepo;
 	
-	@Autowired
-	TransRepository repository;
-	
-	String[] services = {
-			"http://localhost:8080/service/transportadora/2",
-			"http://localhost:8080/service/transportadora/3",
-			"http://localhost:8080/service/transportadora/4",
-			"http://localhost:8080/service/transportadora/5"
-	};
-	
-	@Bean
-	public RestTemplate restTemplate( RestTemplateBuilder builder) {
-		return builder.build();
-	}
-	
-	
-	private List<Transportadora> getTransportadoras(){
-		List<Transportadora> lista = new ArrayList<>();
-		
-		for (String url : services ) {
-			lista.add( restTemplate.getForObject(url, Transportadora.class) );
-		}
-		
-		Transportadora transp1 = new Transportadora("transportadora 1", repository.findAll());
-		lista.add(transp1);
-		return lista;
-	}
 	
 	@GetMapping("/all")
 	public List<Transportadora> teste() {
-		return getTransportadoras();
+		return restRepo.getTransportadoras();
 	}
 	
 	/**
@@ -68,7 +43,7 @@ public class TransportadoraController {
 		FiltroPreco filtro = new FiltroPreco();
 		filtro.setProximoFiltro(new FiltroTempo());
 		
-		return filtro.filtrar(getTransportadoras(), distancia);
+		return filtro.filtrar(restRepo.getTransportadoras(), distancia);
 		
 	}
 	
@@ -86,7 +61,7 @@ public class TransportadoraController {
 		FiltroPreco filtro = new FiltroPreco();
 		filtro.setProximoFiltro(new FiltroTempo());
 		
-		return filtro.filtrar(getTransportadoras(), distancia, tipo);
+		return filtro.filtrar(restRepo.getTransportadoras(), distancia, tipo);
 	}
 	
 	
@@ -100,7 +75,7 @@ public class TransportadoraController {
 		FiltroTempo filtro = new FiltroTempo();
 		filtro.setProximoFiltro(new FiltroPreco());
 		
-		return filtro.filtrar(getTransportadoras(), distancia);
+		return filtro.filtrar(restRepo.getTransportadoras(), distancia);
 	}
 	
 	
@@ -118,7 +93,7 @@ public class TransportadoraController {
 		FiltroTempo filtro = new FiltroTempo();
 		filtro.setProximoFiltro(new FiltroPreco());
 		
-		return filtro.filtrar(getTransportadoras(), distancia, tipo);
+		return filtro.filtrar(restRepo.getTransportadoras(), distancia, tipo);
 	}
 	
 }

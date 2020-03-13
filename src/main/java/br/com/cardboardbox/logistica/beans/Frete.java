@@ -18,9 +18,9 @@ public class Frete {
 	
 	
 	@Id
-	protected int tipo;
-	protected double valorKm;
-	protected int tempoKm;
+	private int tipo;
+	private double valorKm;
+	private int tempoKm;
 	
 	public Frete() {
 		

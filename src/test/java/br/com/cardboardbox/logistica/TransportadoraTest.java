@@ -46,19 +46,19 @@ public class TransportadoraTest {
 		t5.addTransport( Frete.AEREO , 175.0, 30);
 		
 		//rotas a serem testadas
-		Rota rota1 = new Rota("sao paulo", "manaus");
+		Rota rota1 = new Rota("sao paulo", "manaus", Frete.AEREO);
 		rota1.setDistancia(3875);
 		
-		Rota rota2 = new Rota("florianopolis", "campinas");
+		Rota rota2 = new Rota("florianopolis", "campinas", Frete.TERRESTRE );
 		rota2.setDistancia(762);
 		
-		Rota rota3 = new Rota("salvador", "belém");
+		Rota rota3 = new Rota("salvador", "belém", Frete.TODOS);
 		rota3.setDistancia(2018);
 		
-		Rota rota4 = new Rota("Sao paulo", "assuncao");
+		Rota rota4 = new Rota("Sao paulo", "assuncao", Frete.TODOS);
 		rota4.setDistancia(1350);
 		
-		Rota rota5 = new Rota("salvador", "brasilia");
+		Rota rota5 = new Rota("salvador", "brasilia", Frete.TERRESTRE);
 		rota5.setDistancia(1449);
 		
 
@@ -89,10 +89,10 @@ public class TransportadoraTest {
 		FiltroTempo filtroTempo = new FiltroTempo();
 		filtroTempo.setProximoFiltro(new FiltroPreco());
 		
-		List<Transportadora> menorPreco = filtro.filtrar(tLista, rota1.getDistancia(), Frete.AEREO);
+		List<Transportadora> menorPreco = filtro.filtrar(tLista, rota1.getDistancia(), rota1.getTipo());
 		assertArrayEquals(menorPrecoAereoExpected, menorPreco.toArray());
 		
-		menorPreco = filtro.filtrar(tLista, rota2.getDistancia(), Frete.TERRESTRE);
+		menorPreco = filtro.filtrar(tLista, rota2.getDistancia(), rota2.getTipo());
 		assertArrayEquals(menorPrecoTerrestreExpected, menorPreco.toArray());
 		
 		List<Transportadora> menorTempo = filtroTempo.filtrar(tLista, rota3.getDistancia());
@@ -101,13 +101,13 @@ public class TransportadoraTest {
 		menorTempo = filtroTempo.filtrar(tLista, rota4.getDistancia());
 		assertArrayEquals(menorTempoExpected, menorTempo.toArray());
 		
-		menorTempo = filtroTempo.filtrar(tLista, rota5.getDistancia(), Frete.TERRESTRE);
+		menorTempo = filtroTempo.filtrar(tLista, rota5.getDistancia(), rota5.getTipo());
 		assertArrayEquals(menorTempoTerrestreExpected, menorTempo.toArray());
 		
 		
 		//adicionando transportadora com valor igual
 		tLista.add(t5);
-		menorPreco = filtro.filtrar(tLista, rota1.getDistancia(), Frete.AEREO);
+		menorPreco = filtro.filtrar(tLista, rota1.getDistancia(), rota1.getTipo());
 		
 		
 		assertArrayEquals(menorPrecoEmpate, menorPreco.toArray());

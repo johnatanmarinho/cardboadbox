@@ -10,7 +10,6 @@ import br.com.cardboardbox.logistica.dao.TransRepository;
 
 public class Transportadoras {
 
-	private List<Transportadora> transportadoras = new ArrayList<Transportadora>();
 	private List<String> services = new ArrayList<String>();
 	
 	@Autowired
@@ -22,6 +21,7 @@ public class Transportadoras {
 	
 
 	public List<Transportadora> getTransportadoras(){
+		List<Transportadora> transportadoras = new ArrayList<Transportadora>();
 		
 		for (String url : services ) {
 			transportadoras.add( restTemplate.getForObject(url, Transportadora.class) );

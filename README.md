@@ -2,30 +2,26 @@
 Integração entre transportadoras
 
 
-# Serviços
-
-Acesso ao sistema:
+#Sistema
 http://localhost:8080/
 
-Todas as Transportadoras
-http://localhost:8080/transportadoras/all
 
+#Servicos Filtragem
+
+Lista todas as transportadoras
+> http://localhost:8080/transportadoras/all
+
+
+Para fazer A filtragem é necessario enviar um objeto "Rota" na requisão, com a origem, o destino e a distância
 Melhor Preço
-http://localhost:8080/transportadoras/melhorPreco/<distancia>
-
-Melhor Preco para Determinado Tipo
-http://localhost:8080/transportadoras/melhorPreco/<distancia>/<id tipo>
-
+> http://localhost:8080/transportadoras/melhorPreco/
 
 Melhor Tempo de Entrega
-http://localhost:8080/transportadoras/melhorTempo/<distancia>
-
-Melhor Tempo de Entrega para Determinado Tipo
-http://localhost:8080/transportadoras/melhorTempo/<distancia>/<id tipo>
+> http://localhost:8080/transportadoras/melhorTempo/
 
 
 Os serviços para de cada tranportadora foram simulados atraves de
-http://localhost:8080/service/transportadora/<id transportadora>
+> http://localhost:8080/service/transportadora/<id transportadora>
 
 ## Estado Atual e Proximos Passos
 

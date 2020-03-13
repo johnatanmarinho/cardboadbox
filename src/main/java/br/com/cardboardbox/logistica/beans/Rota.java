@@ -7,11 +7,24 @@ public class Rota {
 
 	private String origem;
 	private String destino;
+	private int tipo;
+	
 	private double distancia;
 	
+	public Rota() {
+		
+	}
+	public Rota(String origem, String destino, int tipo) {
+		this.origem = origem;
+		this.destino = destino;
+		this.tipo = tipo;
+	}
 	
-	public Rota(String string, String string2) {
-		// TODO Auto-generated constructor stub
+	public int getTipo() {
+		return tipo;
+	}
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
 	}
 	public String getOrigem() {
 		return origem;

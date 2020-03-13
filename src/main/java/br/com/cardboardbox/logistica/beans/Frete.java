@@ -16,6 +16,9 @@ public class Frete {
 	@Transient
 	public static final int TERRESTRE = 2;
 	
+	@Transient
+	public static final int TODOS = 0;
+	
 	
 	@Id
 	private int tipo;

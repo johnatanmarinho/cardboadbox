@@ -1,6 +1,5 @@
 package br.com.cardboardbox.logistica.filtros;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,20 +12,22 @@ public class FiltroTempo extends Filtro{
 	public List<Transportadora> filtrar(List<Transportadora> transportadoras, double distancia, int tipoFrete) {
 		List<Transportadora> result = filtraPeloTipo(transportadoras, tipoFrete);
 
-		if(result == null)
-			return new ArrayList<Transportadora>();
-		
 		double menorTempo = result.stream()
 				.mapToDouble( t -> t.getFreteByTipo(tipoFrete).getTempoEntrega(distancia))
 				.min().getAsDouble();
 				
-		result = result.stream()
+		result.retainAll(
+			result.stream()
 				.filter( t -> t.getFreteByTipo(tipoFrete).getTempoEntrega(distancia) == menorTempo)
-				.collect(Collectors.toList());
+				.collect(Collectors.toList())
+		);
 		
-		if(hasNext()) {
-			result = getNext().filtrar(result, distancia, tipoFrete);
-		}
+		
+		getProximoFiltro().ifPresent(
+			filtro -> {
+				result.retainAll(filtro.filtrar(result, distancia, tipoFrete));
+			}
+		);
 		return result;
 	}
 
@@ -49,9 +50,11 @@ public class FiltroTempo extends Filtro{
 				})
 				.collect(Collectors.toList());
 		
-		if(hasNext()) {
-			result = getNext().filtrar(result, distancia);
-		}
+		getProximoFiltro().ifPresent(
+			filtro -> {
+				result.retainAll(filtro.filtrar(result, distancia));
+			}
+		);
 		return result;
 	}
 

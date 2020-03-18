@@ -1,6 +1,5 @@
 package br.com.cardboardbox.logistica.filtros;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,29 +12,26 @@ public class FiltroPreco extends Filtro{
 	public List<Transportadora> filtrar(List<Transportadora> transportadoras, double distancia, int tipoFrete) {
 		List<Transportadora> result = filtraPeloTipo(transportadoras, tipoFrete);
 		
-		if(result == null)
-			return new ArrayList<Transportadora>();
-		
 		double minPreco = result.stream()
 				.mapToDouble( t -> t.getFreteByTipo(tipoFrete).getPrecoFinal(distancia))
 				.min().getAsDouble();
-
-
-		//menor preco
-		result = result.stream()
-				.filter( t -> t.getFreteByTipo(tipoFrete).getPrecoFinal(distancia) == minPreco)
-				.collect(Collectors.toList());
 		
-		if(hasNext()) {
-			result = getNext().filtrar(result, distancia, tipoFrete);
-		}
+		result.retainAll(
+			result.stream()
+				.filter( t -> t.getFreteByTipo(tipoFrete).getPrecoFinal(distancia) == minPreco)
+				.collect(Collectors.toList())
+		);
+
+		
+		getProximoFiltro().ifPresent(
+			filtro -> result.retainAll(filtro.filtrar(result, distancia, tipoFrete))
+		);
+		
 		return result;
 	}
 
 	@Override
 	public List<Transportadora> filtrar(List<Transportadora> transportadoras, double distancia) {
-List<Transportadora> result;
-		
 		double menorPreco = transportadoras.stream()
 				.mapToDouble( t -> {
 					return t.getFretes().stream()
@@ -44,7 +40,7 @@ List<Transportadora> result;
 				})
 				.min().getAsDouble();
 		
-		result = transportadoras.stream()
+		List<Transportadora> result = transportadoras.stream()
 				.filter( t -> {
 					return t.getFretes().stream()
 							.mapToDouble(f -> f.getPrecoFinal(distancia))
@@ -52,9 +48,11 @@ List<Transportadora> result;
 				})
 				.collect(Collectors.toList());
 		
-		if(hasNext()) {
-			result = getNext().filtrar(result, distancia);
-		}
+		
+		getProximoFiltro().ifPresent(
+			filtro -> result.retainAll(filtro.filtrar(result, distancia))
+		);
+		
 		return result;
 	}
 	

@@ -1,6 +1,7 @@
 package br.com.cardboardbox.logistica.filtros;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import br.com.cardboardbox.logistica.beans.Transportadora;
@@ -8,20 +9,19 @@ import br.com.cardboardbox.logistica.beans.Transportadora;
 
 public abstract class Filtro {
 	
-	private Filtro proximoFiltro;
+	private Optional<Filtro> proximoFiltro = Optional.empty();
 	
 	public void setProximoFiltro(Filtro filtro) {
-		this.proximoFiltro = filtro;
+		this.proximoFiltro = Optional.of(filtro);
 	}
 	
-	public boolean hasNext() {
-		return proximoFiltro != null;
-	}
 	
-	public Filtro getNext() {
+	
+	
+	public Optional<Filtro> getProximoFiltro() {
 		return proximoFiltro;
 	}
-	
+
 	public List<Transportadora> filtraPeloTipo(List<Transportadora> transportadoras, int tipoFrete) {
 		return transportadoras.stream()
 				.filter(t -> t.getFreteByTipo(tipoFrete) != null)

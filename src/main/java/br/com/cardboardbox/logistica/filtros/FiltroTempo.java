@@ -13,8 +13,8 @@ public class FiltroTempo extends Filtro{
 		List<Transportadora> result = filtraPeloTipo(transportadoras, tipoFrete);
 
 		double menorTempo = result.stream()
-				.mapToDouble( t -> t.getFreteByTipo(tipoFrete).getTempoEntrega(distancia))
-				.min().getAsDouble();
+				.map( t -> t.getFreteByTipo(tipoFrete).getTempoEntrega(distancia))
+				.min( Double::compare ).get();
 				
 		result.retainAll(
 			result.stream()
@@ -34,26 +34,19 @@ public class FiltroTempo extends Filtro{
 	public List<Transportadora> filtrar(List<Transportadora> transportadoras,  double distancia) {
 		List<Transportadora> result;
 		
-		double menorTempo = transportadoras.stream()
-				.mapToDouble( t -> {
-					return t.getFretes().stream()
-							.mapToDouble(f -> f.getTempoEntrega(distancia))
-							.min().getAsDouble();
-				})
-				.min().getAsDouble();
+		double menorTempo = transportadoras.stream().map(
+			t -> t.getFretes().stream().map(f -> f.getTempoKm()).min(Integer::compare).get()
+		).min(Integer::compare).get();
 		
 		result = transportadoras.stream()
-				.filter( t -> {
-					return t.getFretes().stream()
-							.mapToDouble(f -> f.getTempoEntrega(distancia))
-							.min().getAsDouble() == menorTempo;
-				})
-				.collect(Collectors.toList());
+					.filter(
+						t -> t.getFretes().stream()
+							.map(f -> f.getTempoEntrega(distancia))
+							.min(Double::compare).get() == menorTempo
+					).collect(Collectors.toList());
 		
 		getProximoFiltro().ifPresent(
-			filtro -> {
-				result.retainAll(filtro.filtrar(result, distancia));
-			}
+			filtro -> result.retainAll(filtro.filtrar(result, distancia))
 		);
 		return result;
 	}

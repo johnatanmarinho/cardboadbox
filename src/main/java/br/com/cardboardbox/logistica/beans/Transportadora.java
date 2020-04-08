@@ -56,7 +56,7 @@ public class Transportadora {
 	
 	@Override
 	public String toString() {
-		String text = "";
+		String text = getNome() +": ";
 		
 		for (Frete frete : this.fretes) {
 			text += "tipo do frete: " + frete.getTipo() + 

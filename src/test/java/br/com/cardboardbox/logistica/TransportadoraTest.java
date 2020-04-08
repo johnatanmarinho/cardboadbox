@@ -5,7 +5,8 @@ package br.com.cardboardbox.logistica;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.*;
 
 import br.com.cardboardbox.logistica.beans.Frete;
 import br.com.cardboardbox.logistica.beans.Rota;
@@ -13,16 +14,15 @@ import br.com.cardboardbox.logistica.beans.Transportadora;
 import br.com.cardboardbox.logistica.filtros.FiltroPreco;
 import br.com.cardboardbox.logistica.filtros.FiltroTempo;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TransportadoraTest {
-	
-	
 	@Test
+	@DisplayName("teste dos filtros")
+	@Disabled
 	public void testaFiltros() {
+		List<Transportadora> tLista = new ArrayList<>();
 
-		List<Transportadora> tLista = new ArrayList<Transportadora>();
-		
 		Transportadora t1 = new Transportadora("transportadora 1");
 		t1.addTransport( Frete.TERRESTRE , 50.0, 60);
 		tLista.add(t1);
@@ -52,10 +52,10 @@ public class TransportadoraTest {
 		Rota rota2 = new Rota("florianopolis", "campinas", Frete.TERRESTRE );
 		rota2.setDistancia(762);
 		
-		Rota rota3 = new Rota("salvador", "belém", Frete.TODOS);
+		Rota rota3 = new Rota("salvador", "belém");
 		rota3.setDistancia(2018);
 		
-		Rota rota4 = new Rota("Sao paulo", "assuncao", Frete.TODOS);
+		Rota rota4 = new Rota("Sao paulo", "assuncao");
 		rota4.setDistancia(1350);
 		
 		Rota rota5 = new Rota("salvador", "brasilia", Frete.TERRESTRE);
@@ -89,10 +89,10 @@ public class TransportadoraTest {
 		FiltroTempo filtroTempo = new FiltroTempo();
 		filtroTempo.setProximoFiltro(new FiltroPreco());
 		
-		List<Transportadora> menorPreco = filtro.filtrar(tLista, rota1.getDistancia(), rota1.getTipo());
+		List<Transportadora> menorPreco = filtro.filtrar(tLista, rota1.getDistancia(), rota1.getTipo().getAsInt());
 		assertArrayEquals(menorPrecoAereoExpected, menorPreco.toArray());
 		
-		menorPreco = filtro.filtrar(tLista, rota2.getDistancia(), rota2.getTipo());
+		menorPreco = filtro.filtrar(tLista, rota2.getDistancia(), rota2.getTipo().getAsInt());
 		assertArrayEquals(menorPrecoTerrestreExpected, menorPreco.toArray());
 		
 		List<Transportadora> menorTempo = filtroTempo.filtrar(tLista, rota3.getDistancia());
@@ -101,13 +101,13 @@ public class TransportadoraTest {
 		menorTempo = filtroTempo.filtrar(tLista, rota4.getDistancia());
 		assertArrayEquals(menorTempoExpected, menorTempo.toArray());
 		
-		menorTempo = filtroTempo.filtrar(tLista, rota5.getDistancia(), rota5.getTipo());
+		menorTempo = filtroTempo.filtrar(tLista, rota5.getDistancia(), rota5.getTipo().getAsInt());
 		assertArrayEquals(menorTempoTerrestreExpected, menorTempo.toArray());
-		
-		
+
+
 		//adicionando transportadora com valor igual
 		tLista.add(t5);
-		menorPreco = filtro.filtrar(tLista, rota1.getDistancia(), rota1.getTipo());
+		menorPreco = filtro.filtrar(tLista, rota1.getDistancia(), rota1.getTipo().getAsInt());
 		
 		
 		assertArrayEquals(menorPrecoEmpate, menorPreco.toArray());

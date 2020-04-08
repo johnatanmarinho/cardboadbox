@@ -9,9 +9,10 @@ document.addEventListener("DOMContentLoaded", function(){
         let rota = {
         		origem: document.getElementById("origem").value,
         		destino: document.getElementById("destino").value,
-        		distancia: document.getElementById("distancia").value,
-        		tipo: document.getElementById("tipo-transport").value
-        }
+        		distancia: document.getElementById("distancia").value
+        };
+        
+        console.log(rota);
         
         let prioridade = document.getElementById("prioridade").value;
                 

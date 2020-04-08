@@ -1,6 +1,7 @@
 package br.com.cardboardbox.logistica.filtros;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import br.com.cardboardbox.logistica.beans.Transportadora;
@@ -11,10 +12,10 @@ public class FiltroPreco extends Filtro{
 	
 	public List<Transportadora> filtrar(List<Transportadora> transportadoras, double distancia, int tipoFrete) {
 		List<Transportadora> result = filtraPeloTipo(transportadoras, tipoFrete);
-		
+
 		double minPreco = result.stream()
-				.mapToDouble( t -> t.getFreteByTipo(tipoFrete).getPrecoFinal(distancia))
-				.min().getAsDouble();
+				.map( t -> t.getFreteByTipo(tipoFrete).getPrecoFinal(distancia))
+				.min(Double::compare).get();
 		
 		result.retainAll(
 			result.stream()
@@ -22,7 +23,6 @@ public class FiltroPreco extends Filtro{
 				.collect(Collectors.toList())
 		);
 
-		
 		getProximoFiltro().ifPresent(
 			filtro -> result.retainAll(filtro.filtrar(result, distancia, tipoFrete))
 		);
@@ -32,28 +32,28 @@ public class FiltroPreco extends Filtro{
 
 	@Override
 	public List<Transportadora> filtrar(List<Transportadora> transportadoras, double distancia) {
-		double menorPreco = transportadoras.stream()
-				.mapToDouble( t -> {
-					return t.getFretes().stream()
-							.mapToDouble(f -> f.getPrecoFinal(distancia))
-							.min().getAsDouble();
-				})
-				.min().getAsDouble();
-		
-		List<Transportadora> result = transportadoras.stream()
-				.filter( t -> {
-					return t.getFretes().stream()
-							.mapToDouble(f -> f.getPrecoFinal(distancia))
-							.min().getAsDouble() == menorPreco;
-				})
-				.collect(Collectors.toList());
-		
-		
-		getProximoFiltro().ifPresent(
-			filtro -> result.retainAll(filtro.filtrar(result, distancia))
-		);
-		
-		return result;
+		Optional<Double> menorPreco = transportadoras.stream().map(
+					t -> t.getFretes().stream().map(
+						frete -> frete.getValorKm()
+					).min(Double::compare).get()
+				).min(Double::compare);
+
+		if(menorPreco.isPresent()) {
+			List<Transportadora> result = transportadoras.stream()
+					.filter(
+							t -> t.getFretes().stream()
+									.map(f -> f.getPrecoFinal(distancia))
+									.min(Double::compare).get() == menorPreco.get()
+					).collect(Collectors.toList());
+
+
+			getProximoFiltro().ifPresent(
+					filtro -> result.retainAll(filtro.filtrar(result, distancia))
+			);
+
+			return result;
+		}
+		return null;
 	}
 	
 }

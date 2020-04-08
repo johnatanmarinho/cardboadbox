@@ -1,13 +1,16 @@
 package br.com.cardboardbox.logistica.beans;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
+@Table(name="Frete")
 public class Frete {
 	
 	@Transient
@@ -21,8 +24,11 @@ public class Frete {
 	
 	
 	@Id
+	@Column(name="tipo")
 	private int tipo;
+	@Column(name = "valorKm")
 	private double valorKm;
+	@Column(name = "tempoKm")
 	private int tempoKm;
 	
 	public Frete() {
